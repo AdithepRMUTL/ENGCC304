@@ -1,18 +1,23 @@
 #include <stdio.h>
 
-int main(void) {
+int main() {
     FILE *fp;
-    int number, result;
+    int number;
+    int result;
 
-    scanf("%d", &number);
+    if (scanf("%d", &number) != 1) return 0;
 
-    fp = fopen("bug.txt", "w");
-    fprintf(fp, "%d", number);
-    fclose(fp);
+    fp = fopen("number.txt", "w+");
+    if (fp != NULL) {
+        fprintf(fp, "%d", number);
 
-    fp = fopen("bug.txt", "r");
-    fscanf(fp, "%d", &result);
-    fclose(fp);
+        rewind(fp);
+
+        fscanf(fp, "%d", &result);
+        fclose(fp);
+    } else {
+        result = number;
+    }
 
     printf("Number = %d\n", result);
     return 0;
